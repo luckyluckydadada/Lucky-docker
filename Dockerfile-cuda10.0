@@ -29,7 +29,7 @@ RUN find $INST_SCRIPTS -name '*.sh' -exec chmod a+x {} +
 
 ### Bashrc
 ADD ./bashrc/ $HOME/
-RUN echo -e 'alias ls="ls --color" \nalias ll="ls -l"  \nalias cp="cp -r" \nalias change="chown -R 1000 ~ & chgrp -R 1000 ~"\n' >> $HOME/.bashrc
+RUN sh -c "echo -e 'alias ls="ls --color"\nalias ll="ls -l"\nalias cp="cp -r"\nalias change="chown -R 1000 ~ & chgrp -R 1000 ~"\n' >> $HOME/.bashrc "
 
 ### Install some common tools : vim wget net-tools locales bzip2 git gcc cmake zip nomacs gedit python-numpy
 RUN $INST_SCRIPTS/tools.sh
