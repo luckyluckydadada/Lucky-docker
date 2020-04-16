@@ -1,9 +1,10 @@
 # Lucky-docker
 ## 1 Introduction
-Quickly build docker image with graphical interface to realize deep learning development.
-Software:
+Quickly build docker image with graphical interface to realize deep learning development.Software:
+```
   Ubuntu18.04 Bionic XFCE desktop with TurboVNC.
   gcc,vim,anaconda,beyond-compare,git,cmake,gedit.
+```
 ## 2 cuda10.0-cudnn7.6.5-devel-ubuntu18.04-vnc usage
 ### BUILD Image
 ```
@@ -32,5 +33,5 @@ nvidia-docker run --runtime=nvidia -u root -it \
   -p 30011:8888 -p 30012:6006 -p 30013:6901 -p 30014:5901 \ 
   --name lucky1 \
   -v LocalDir:/headless/lucky \
-  lucky:cuda10.0-cudnn7.6.5-devel-ubuntu18.04-vnc
+  lucky:cuda9.0-cudnn7.6.4-devel-ubuntu16.04-vnc
 ```
