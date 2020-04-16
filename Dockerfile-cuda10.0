@@ -1,0 +1,72 @@
+
+FROM nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
+
+MAINTAINER Lucky "savoki1024@gmail.com"
+
+## VNC Connection  [IP:5901] or Web Connection [http://IP:6901/?password=lucky]
+ENV DISPLAY=:1 \
+    VNC_PORT=5901 \
+    NO_VNC_PORT=6901
+EXPOSE $VNC_PORT $NO_VNC_PORT
+
+### Envrionment config
+ENV HOME=/headless \
+    TERM=xterm \
+    STARTUPDIR=/dockerstartup \
+    INST_SCRIPTS=/headless/install \
+    NO_VNC_HOME=/headless/noVNC \
+    DEBIAN_FRONTEND=noninteractive \
+    VNC_COL_DEPTH=24 \
+    VNC_RESOLUTION=1920x1080 \
+    VNC_PW=lucky \
+    VNC_VIEW_ONLY=false
+WORKDIR $HOME
+
+### Copy all install scripts and .deb
+ADD ./install/ $INST_SCRIPTS/
+ADD ./software/ $INST_SCRIPTS/
+RUN find $INST_SCRIPTS -name '*.sh' -exec chmod a+x {} +
+
+### Bashrc
+ADD ./bashrc/ $HOME/
+RUN echo -e 'alias ls="ls --color" \nalias ll="ls -l"  \nalias cp="cp -r" \nalias change="chown -R 1000 ~ & chgrp -R 1000 ~"\n' >> $HOME/.bashrc
+
+### Install some common tools : vim wget net-tools locales bzip2 git gcc cmake zip nomacs gedit python-numpy
+RUN $INST_SCRIPTS/tools.sh
+ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
+
+### Install custom fonts
+RUN $INST_SCRIPTS/install_custom_fonts.sh
+
+### Install xvnc-server & noVNC - HTML5 based VNC viewer
+RUN $INST_SCRIPTS/tigervnc.sh
+RUN $INST_SCRIPTS/no_vnc.sh
+
+### Install chrome browser
+RUN $INST_SCRIPTS/chrome.sh
+
+### Install Anaconda
+RUN wget https://repo.anaconda.com/archive/Anaconda3-2020.02-Linux-x86_64.sh
+RUN find $INST_SCRIPTS -name '*.sh' -exec chmod a+x {} +
+RUN sh -c '/bin/echo -e "\nyes\n/usr/local/anaconda3\nyes\n" | sh Anaconda3-2020.02-Linux-x86_64.sh'
+RUN rm -rf Anaconda3-2020.02-Linux-x86_64.sh
+
+### Install Bcompare & vscode, eixt 0 - ignore errors and always success
+RUN dpkg -i $INST_SCRIPTS/bcompare-4.2.10.23938_amd64.deb ; exit 0
+RUN dpkg -i $INST_SCRIPTS/code_1.40.1-1573664190_amd64.deb ; exit 0
+RUN apt install -f -y
+RUN rm -rf $INST_SCRIPTS/bcompare-4.2.10.23938_amd64.deb $INST_SCRIPTS/code_1.40.1-1573664190_amd64.deb
+
+### Install xfce UI
+RUN $INST_SCRIPTS/xfce_ui.sh
+ADD ./xfce/ $HOME/
+
+### Startup
+RUN $INST_SCRIPTS/libnss_wrapper.sh
+ADD ./dockerstartup $STARTUPDIR
+RUN $INST_SCRIPTS/set_user_permission.sh $STARTUPDIR $HOME
+
+USER 1000
+
+ENTRYPOINT ["/dockerstartup/vnc_startup.sh"]
+CMD ["--wait"]
