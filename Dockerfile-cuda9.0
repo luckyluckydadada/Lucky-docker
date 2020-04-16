@@ -28,7 +28,7 @@ ADD ./software/ $INST_SCRIPTS/
 RUN find $INST_SCRIPTS -name '*.sh' -exec chmod a+x {} +
 
 ### Bashrc
-ADD ./bashrc/ $HOME/
+ADD ./bashrc/ $HOME/bashrc
 
 ### Install some common tools : vim wget net-tools locales bzip2 git gcc cmake zip nomacs gedit python-numpy
 RUN $INST_SCRIPTS/tools.sh
