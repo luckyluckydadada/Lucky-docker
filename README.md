@@ -26,7 +26,7 @@ nvidia-docker run --runtime=nvidia -u root -it \
 ```
 git clone https://github.com/luckyluckydadada/Lucky-docker.git
 cd Lucky-docker
-docker build -t lucky:cuda9.0-cudnn7.6.4-devel-ubuntu16.04-vnc -f Dockerfile-cuda10.0 .
+docker build -t lucky:cuda9.0-cudnn7.6.4-devel-ubuntu16.04-vnc -f Dockerfile-cuda9.0 .
 ```
 ### Create Container
 ```
