@@ -5,8 +5,7 @@ Quickly build docker image with graphical interface to realize deep learning dev
   Ubuntu Bionic XFCE desktop with TurboVNC.
   gcc,vim,vscode,anaconda,beyond-compare,git,cmake,gedit.
 ```
-Note
-If you restart the container, please restart vncserver:
+Note,if you restart the container, please restart vncserver:
 ```
   vncserver :0 -geometry 1920x1080
 ```
