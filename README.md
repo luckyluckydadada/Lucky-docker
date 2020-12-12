@@ -29,7 +29,7 @@ docker build -t lucky:cuda10.0-cudnn7.6.5-devel-ubuntu18.04-vnc -f Dockerfile-cu
 ```
 ### Create Container
 ```
-nvidia-docker run --runtime=nvidia -u root -it \
+nvidia-docker run --runtime=nvidia -u root -it  -e USER=root \
   -e NVIDIA_VISIBLE_DEVICES=0,1 \
   -p 300${LUCKYID}1:8888 -p 300${LUCKYID}2:6006 -p 300${LUCKYID}3:6901 -p 300${LUCKYID}4:5901 \ 
   --name lucky${LUCKYID} \
@@ -45,7 +45,7 @@ docker build -t lucky:cuda9.0-cudnn7.6.4-devel-ubuntu16.04-vnc -f Dockerfile-cud
 ```
 ### Create Container
 ```
-nvidia-docker run --runtime=nvidia -u root -it \
+nvidia-docker run --runtime=nvidia -u root -it  -e USER=root \
   -e NVIDIA_VISIBLE_DEVICES=0,1 \
   -p 300${LUCKYID}1:8888 -p 300${LUCKYID}2:6006 -p 300${LUCKYID}3:6901 -p 300${LUCKYID}4:5901 \ 
   --name lucky${LUCKYID} \
@@ -61,7 +61,7 @@ docker build -t lucky:cuda10.0-cudnn7.6.5-devel-ubuntu18.04-vnc-noconda-lucky -f
 ```
 ### Create Container
 ```
-nvidia-docker run --runtime=nvidia -u lucky -it \
+nvidia-docker run --runtime=nvidia -u lucky -it  -e USER=lucky \
   -e NVIDIA_VISIBLE_DEVICES=0,1 \
   -p 300${LUCKYID}1:8888 -p 300${LUCKYID}2:6006 -p 300${LUCKYID}3:6901 -p 300${LUCKYID}4:5901 \ 
   --name lucky${LUCKYID} \
@@ -78,7 +78,7 @@ docker build -t lucky:cuda10.1-cudnn7-devel-ubuntu18.04-vnc -f Dockerfile-cuda10
 ```
 ### Create Container
 ```
-nvidia-docker run --runtime=nvidia -u root -it \
+nvidia-docker run --runtime=nvidia -u root -it  -e USER=root \
   -e NVIDIA_VISIBLE_DEVICES=0,1 \
   -p 300${LUCKYID}1:8888 -p 300${LUCKYID}2:6006 -p 300${LUCKYID}3:6901 -p 300${LUCKYID}4:5901 \ 
   --name lucky${LUCKYID} \
@@ -94,7 +94,7 @@ docker build -t lucky:cuda10.2-cudnn7-devel-ubuntu18.04-vnc -f Dockerfile-cuda10
 ```
 ### Create Container
 ```
-nvidia-docker run --runtime=nvidia -u root -it \
+nvidia-docker run --runtime=nvidia -u root -it  -e USER=root \
   -e NVIDIA_VISIBLE_DEVICES=0,1 \
   -p 300${LUCKYID}1:8888 -p 300${LUCKYID}2:6006 -p 300${LUCKYID}3:6901 -p 300${LUCKYID}4:5901 \ 
   --name lucky${LUCKYID} \
